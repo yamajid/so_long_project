@@ -6,85 +6,94 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 00:26:55 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/14 13:51:21 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/05/27 16:31:00 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include "stdio.h"
-void    ft_get_map(t_map *map, int fd)
-{
-    char   *line;
-    int     index;
 
-    index = 0;
-    line = ft_del_last_char(get_next_line(fd), '\n');
-    while (line)
-    {
-        ft_mapaddback(&map, ft_newline(line, index));
-        line = ft_del_last_char(get_next_line(fd), '\n');
-        index ++;
-    }
-    if (ft_check_lenght(map) == 1 || ft_check_left_and_right(map) == 1 || 
-    (ft_check_top_and_buttom_line(map) == 1) || ft_check_map_char(map) == 1)
-    {
-        printf("here1");
-        return ;
-    }
-    if (ft_check_map_char_count(map, 'P') != 1 || ft_check_map_char_count(map, 'E') != 1)
-    {
-        printf("here2");
-        return ;
-    }
-    if (ft_check_map_char_count(map, 'C') < 1)
-    {
-        printf("here3");
-        return ;
-    }
+t_map *mapcopy(t_map *map)
+{
+    t_map   *map2;
     
+    map2 = NULL;
+    while (map != NULL)
+    {
+        ft_mapaddback(&map2, ft_newline(ft_strdup(map->line), map->index));
+        map = map->next;
+    }
+    return (map2);
+}
+t_map *mapcopy2(t_map *map)
+{
+    t_map   *map2;
+    
+    map2 = NULL;
+    while (map != NULL)
+    {
+        ft_mapaddback(&map2, ft_newline(ft_strdup(map->line), map->index));
+        map = map->next;
+    }
+    return (map2);
+}
+
+t_tiles *load_tiles(void *mlx)
+{
+    t_tiles *t;
+    int i;
+    int j;
+
+    t = (t_tiles *)malloc(sizeof(t_tiles));
+    t->c = mlx_xpm_file_to_image(mlx, "src/c.xpm", &i, &j);
+    t->e = mlx_xpm_file_to_image(mlx, "src/e.xpm", &i, &j);
+    t->p = mlx_xpm_file_to_image(mlx, "src/p.xpm", &i, &j);
+    t->space = mlx_xpm_file_to_image(mlx, "src/sp.xpm", &i, &j);
+    t->w = mlx_xpm_file_to_image(mlx, "src/w.xpm", &i, &j);
+    return (t);
 }
 
 int main (int argc, char **argv)
 {
+    t_player    *player;
+    t_game      *game;
     t_map   *map;
     t_map   *map2;
+    t_map   *tmp;
     int     fd;
-    char    *line;
-    int     len;
     int     index;
+    void    *mlx;
+    int     y;
+    t_tiles *t;
     
-    map = NULL;
+    map = (t_map *)malloc(sizeof(t_map));
+    game = (t_game *)malloc(sizeof(t_game));
+    t = (t_tiles *)malloc(sizeof(t_tiles));
     fd = open(argv[1], O_RDONLY);
     if (fd < 0)
         return (0);
-    ft_get_map(map, fd);
-    map2 = map;
+    map = ft_get_map(fd);
+    if (check_map_valid(map) == 0)
+        return (write(1, "ERR\n", 4), 0);
+    map2 = mapcopy(map);
+    map->map3 = mapcopy2(map);
+    player = ft_get_player_loc(map2);
+    ft_flood_fill(map2, player->x, player->y);
+    if (ft_check_map_char_count(map2, 'C') != 0 || ft_check_map_char_count(map2, 'E') != 0)
+        return (0);
+    game->mlx = mlx_init();
+    if (!game->mlx)
+        return (write(1, "Error initializing Minilibx\n", 29), 0);
+    game->window = mlx_new_window(game->mlx,ft_strlen(map->line) * 50, ft_mapsize(map) * 50,"so_long");
+    if (!game->window)
+        return (write(1, "Error Creating window\n", 23), 0);
+    t = load_tiles(game->mlx);
+    free (map2);
+    map->game = game;
+    map->tiles = t;
+    map->player = player;
+    first_drawing(map, game);
+    key_hook(game, t, map);
+    mlx_loop(game->mlx);
+    return (0);
+    
 }
-
-// char *ft_get_player_loc(t_map *map)
-// {
-//     t_map *tmp;
-//     char *str;
-//     int i;
-    
-//     if (map == NULL)
-//         return (NULL);
-//     tmp = map;
-//     while (tmp)
-//     {
-//         i = 0;
-//                 str[0] = i;
-//                 str[1] = tmp->index;
-//         while (tmp->line[i])
-//         {
-//             if (tmp->line[i] == 'P')
-//             {
-//                 ft_check_for_valid_map(map, str);
-//             }
-//             i++;
-//         }
-//         tmp = tmp->next;
-//     }
-//     return (NULL);
-    
-// }

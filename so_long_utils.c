@@ -6,7 +6,7 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 00:55:47 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/12 18:23:06 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/05/21 17:06:14 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ t_map	*ft_maplast(t_map *map)
 void	ft_mapaddback(t_map **map, t_map *line)
 {
 	t_map	*lastnode;
-	t_map	*tmp;
 
-	tmp = *map;
-	if (!map || !line)
+	if (!line && !map)
+		return ;
+	if (!line)
 		return ;
 	if (!*map)
 	{
@@ -46,7 +46,6 @@ void	ft_mapaddback(t_map **map, t_map *line)
 	lastnode = ft_maplast(*map);
 	lastnode->next = line;
 }
-
 t_map	*ft_newline(char *line, int index)
 {
 	t_map	*newnode;
