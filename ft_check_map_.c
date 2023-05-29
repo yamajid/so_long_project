@@ -6,7 +6,7 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 18:48:42 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/18 16:33:54 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/05/29 01:31:38 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	ft_check_lenght(t_map *map)
 	}
 	return (0);
 }
-int	ft_check_top_and_buttom_line(t_map *map)
+
+int	ft_check_walls(t_map *map)
 {
 	int		i;
 	t_map	*last;
@@ -55,6 +56,7 @@ int	ft_check_top_and_buttom_line(t_map *map)
 	}
 	return (0);
 }
+
 int	ft_check_left_and_right(t_map *map)
 {
 	int		i;
@@ -74,7 +76,8 @@ int	ft_check_left_and_right(t_map *map)
 	}
 	return (0);
 }
-int	ft_check_map_char_count(t_map *map, char c)
+
+int	ft_check_char_count(t_map *map, char c)
 {
 	t_map	*tmp;
 	int		count;
@@ -95,10 +98,11 @@ int	ft_check_map_char_count(t_map *map, char c)
 	}
 	return (count);
 }
+
 int	ft_check_map_char(t_map *map)
 {
-	int i;
-	t_map *tmp;
+	int		i;
+	t_map	*tmp;
 
 	tmp = map;
 	i = 0;

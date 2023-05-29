@@ -6,22 +6,27 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 00:55:47 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/21 17:06:14 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/05/29 21:38:52 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
 int	ft_mapsize(t_map *map)
 {
-	int i;
+	int		i;
+	t_map	*tmp;
+
 	i = 0;
-	while (map)
+	tmp = map;
+	while (tmp)
 	{
-		map = map->next;
+		tmp = tmp->next;
 		i++;
 	}
 	return (i);
 }
+
 t_map	*ft_maplast(t_map *map)
 {
 	if (map == NULL)
@@ -30,6 +35,7 @@ t_map	*ft_maplast(t_map *map)
 		map = map->next;
 	return (map);
 }
+
 void	ft_mapaddback(t_map **map, t_map *line)
 {
 	t_map	*lastnode;
@@ -46,6 +52,7 @@ void	ft_mapaddback(t_map **map, t_map *line)
 	lastnode = ft_maplast(*map);
 	lastnode->next = line;
 }
+
 t_map	*ft_newline(char *line, int index)
 {
 	t_map	*newnode;
@@ -54,25 +61,18 @@ t_map	*ft_newline(char *line, int index)
 	if (!newnode)
 		return (NULL);
 	newnode->index = index;
-    newnode->line = line;
+	newnode->line = line;
 	newnode->next = NULL;
 	return (newnode);
 }
-int	ft_strchrch(char *s, int c)
+char	*ft_del_last_char(char *s1, char set)
 {
-	int	i;
+	size_t	len;
 
-	if (s == NULL)
-		return (1);
-	if ((char) c == '\0')
-		return (1);
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '\n')
-			return (1);
-		i++;
-	}
-	return (0);
+	if (!s1 || !set)
+		return (NULL);
+	len = ft_strlen(s1);
+	if (s1[len - 1] == '\n')
+		s1[len - 1] = '\0';
+	return (s1);
 }
-
