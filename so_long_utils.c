@@ -6,7 +6,7 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 00:55:47 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/29 21:38:52 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:25:40 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_map	*ft_newline(char *line, int index)
 	newnode->next = NULL;
 	return (newnode);
 }
+
 char	*ft_del_last_char(char *s1, char set)
 {
 	size_t	len;

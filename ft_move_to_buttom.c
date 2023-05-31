@@ -6,7 +6,7 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 00:01:49 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/29 19:05:52 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/05/30 20:51:13 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,27 @@ void	help_buttom_move_function(char *line, t_player *player, t_map *map)
 	}
 }
 
-void	ft_buttom_move(t_map *map)
+int	ft_buttom_move(t_map *map)
 {
 	t_move	move;
 
 	move.player = ft_get_player_loc(map);
 	move.line = ft_search_for_line(map, move.player->y + 1);
 	if (move.line == NULL)
-		return ;
+		return (free(move.player), 0);
 	move.i = move.player->x;
 	if (move.line[move.i] == '1')
-		return ;
+		return (free(move.player), 0);
 	if (move.line[move.i] == 'C' || move.line[move.i] == '0')
 		help_buttom_move_function(move.line, move.player, map);
-	if (move.line[move.i] == 'E'
-		&& move.player->coins == move.player->coins_count)
+	if (move.line[move.i] == 'E')
 	{
-		write(1, "You Win\n", 7);
-		mlx_clear_window(map->game->mlx, map->game->win);
-		exit(1);
+		if (move.player->coins == move.player->coins_count)
+			ft_win(map);
+		else
+			return (free(move.player), 0);
 	}
-	else
-	{
-		ft_putnbr(map->player->moves++);
-		write(1, "\n", 1);
-		return ;
-	}
+	ft_putnbr(map->player->moves++);
+	write(1, "\n", 1);
+	return (free(move.player), 0);
 }

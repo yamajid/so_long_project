@@ -6,7 +6,7 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:15:10 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/29 21:35:22 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/05/31 18:23:20 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,20 @@ void	ft_putnbr(int num)
 	}
 	else
 		ft_putchar(num + '0');
+}
+
+void	ft_win(t_map *map)
+{
+	write(1, "YOU WIN\n", 8);
+	mlx_destroy_window(map->game->mlx, map->game->win);
+	ft_lstclear(&map);
+	exit(1);
+}
+
+void	ft_error(t_map *map)
+{
+	write(1, "Error\n", 7);
+	ft_lstclear(&map);
+	map = NULL;
+	exit(1);
 }

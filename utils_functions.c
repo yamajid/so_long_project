@@ -6,13 +6,13 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:56:30 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/29 01:29:22 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/05/31 18:48:25 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char	*ft_search_for_line(t_map *map, int index)
+char	*ft_search_for_line(t_map *map, size_t index)
 {
 	while (map->next != NULL)
 	{
@@ -27,12 +27,12 @@ int	check_map_valid(t_map *map)
 {
 	if ((ft_check_lenght(map) == 1 || ft_check_left_and_right(map) == 1)
 		|| (ft_check_walls(map) == 1 || ft_check_map_char(map) == 1))
-		return (write(1, "ERR\n", 4), 0);
+		return (write(1, "Error\n", 7), ft_lstclear(&map), 0);
 	if (ft_check_char_count(map, 'P') != 1 || ft_check_char_count(map,
 			'E') != 1)
-		return (write(1, "ERR\n", 4), 0);
+		return (write(1, "Error\n", 7), ft_lstclear(&map), 0);
 	if (ft_check_char_count(map, 'C') < 1)
-		return (write(1, "ERR\n", 4), 0);
+		return (write(1, "Error\n", 7), ft_lstclear(&map), 0);
 	return (1);
 }
 
