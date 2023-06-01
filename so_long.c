@@ -6,7 +6,7 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 00:26:55 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/31 20:59:54 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/06/01 16:51:21 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,29 @@ t_tiles	*load_tiles(void *mlx)
 		return (NULL);
 	t->e = mlx_xpm_file_to_image(mlx, "src/e.xpm", &i, &j);
 	if (!t->e)
-		return (write(1, "trror\n",7), exit(1), NULL);
+		return (write(1, "Error\n", 7), exit(1), NULL);
 	t->c = mlx_xpm_file_to_image(mlx, "src/c.xpm", &i, &j);
 	if (!t->c)
-		return (write(1, "trror\n",7), exit(1), NULL);
+		return (write(1, "Error\n", 7), exit(1), NULL);
 	t->p = mlx_xpm_file_to_image(mlx, "src/p.xpm", &i, &j);
 	if (!t->p)
-		return (write(1, "trror\n",7), exit(1), NULL);
+		return (write(1, "Error\n", 7), exit(1), NULL);
 	t->w = mlx_xpm_file_to_image(mlx, "src/w.xpm", &i, &j);
 	if (!t->w)
-		return (write(1, "trror\n",7), exit(1), NULL);
+		return (write(1, "Error\n", 7), exit(1), NULL);
 	t->space = mlx_xpm_file_to_image(mlx, "src/sp.xpm", &i, &j);
 	if (!t->space)
-		return (write(1, "trror\n",7), exit(1), NULL);
+		return (write(1, "Error\n", 7), exit(1), NULL);
 	return (t);
 }
 
-void	ft_help_main(t_map **map, t_player **player, t_game **game)
+void	ft_help_main(t_map **map, t_player **player, t_game **game,
+		t_tiles **tiles)
 {
 	t_map	*map2;
 
+	if (map == NULL)
+		return ;
 	if (check_map_valid(*map) == 0)
 		exit(1);
 	map2 = mapcopy(*map);
@@ -91,9 +94,10 @@ void	ft_help_main(t_map **map, t_player **player, t_game **game)
 			ft_mapsize(*map) * 50, "so_long");
 	if (!(*game)->win)
 		ft_error(*map);
+	(*tiles) = load_tiles((*game)->mlx);
 }
 
-void b()
+void	b(void)
 {
 	system("leaks so_long");
 }
@@ -101,16 +105,13 @@ void b()
 int	main(int argc, char **argv)
 {
 	t_vars	vars;
-	
-	atexit(b);	
+
+	atexit(b);
 	if (argc != 2)
 	{
 		write(1, "Error\n", 7);
 		return (0);
 	}
-	vars.map = (t_map *)malloc(sizeof(t_map));
-	if (!vars.map)
-		return (0);
 	vars.game = (t_game *)malloc(sizeof(t_game));
 	if (!vars.game)
 		return (0);
@@ -118,13 +119,18 @@ int	main(int argc, char **argv)
 	if (vars.fd < 0)
 		return (0);
 	vars.map = ft_get_map(vars.fd);
-	ft_help_main(&vars.map, &vars.player, &vars.game);
-	vars.t = load_tiles(vars.game->mlx);
+	if (vars.map == NULL)
+	{
+		write(1, "Error\n", 7);
+		free(vars.game);
+		return (0);
+	}
+	ft_help_main(&vars.map, &vars.player, &vars.game, &vars.t);
 	vars.map->game = vars.game;
 	vars.map->player = vars.player;
 	vars.map->tiles = vars.t;
-	first_drawing(vars.map, vars.game);
-	key_hook(vars.game,vars.map);
+	first_drawing(vars.map);
+	key_hook(vars.map);
 	mlx_loop(vars.game->mlx);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 23:55:22 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/30 20:50:50 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/06/01 16:21:25 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_left_move(t_map *map)
 	if (move.line[move.i - 1] == 'E')
 	{
 		if (move.player->coins == move.player->coins_count)
-			ft_win(map);
+			return (free(move.player), ft_win(map), 0);
 		else
 			return (free(move.player), 0);
 	}

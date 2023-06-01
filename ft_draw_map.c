@@ -6,7 +6,7 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:02:34 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/29 21:22:45 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/05/31 23:05:46 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ void	ft_draw_map(t_map *m)
 	help_draw_func(game, t, m, index);
 }
 
-void	first_drawing(t_map *map, t_game *game)
+void	first_drawing(t_map *map)
 {
 	int		index;
 	t_tiles	*t;
 
 	t = map->tiles;
 	index = 0;
-	help_draw_func(game, t, map, index);
+	help_draw_func(map->game, t, map, index);
 }

@@ -6,7 +6,7 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:15:10 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/31 18:23:20 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/06/01 16:20:37 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,5 @@ void	ft_error(t_map *map)
 {
 	write(1, "Error\n", 7);
 	ft_lstclear(&map);
-	map = NULL;
 	exit(1);
 }

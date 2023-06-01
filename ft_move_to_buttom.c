@@ -6,7 +6,7 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 00:01:49 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/30 20:51:13 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/06/01 16:21:29 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ft_buttom_move(t_map *map)
 	if (move.line[move.i] == 'E')
 	{
 		if (move.player->coins == move.player->coins_count)
-			ft_win(map);
+			return (free(move.player), ft_win(map), 0);
 		else
 			return (free(move.player), 0);
 	}

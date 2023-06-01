@@ -6,7 +6,7 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:56:30 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/31 18:48:25 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/06/01 16:03:36 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_map	*ft_get_map(int fd)
 		line = ft_del_last_char(get_next_line(fd), '\n');
 		index++;
 	}
+	close(fd);
 	return (map);
 }
 

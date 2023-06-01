@@ -6,7 +6,7 @@
 /*   By: yamajid <yamajid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 00:55:47 by yamajid           #+#    #+#             */
-/*   Updated: 2023/05/30 15:25:40 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/06/01 16:45:31 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,14 @@ t_map	*ft_maplast(t_map *map)
 
 void	ft_mapaddback(t_map **map, t_map *line)
 {
-	t_map	*lastnode;
-
-	if (!line && !map)
-		return ;
-	if (!line)
+	if (!map || !line)
 		return ;
 	if (!*map)
 	{
 		*map = line;
 		return ;
 	}
-	lastnode = ft_maplast(*map);
-	lastnode->next = line;
+	ft_mapaddback(&(*map)->next, line);
 }
 
 t_map	*ft_newline(char *line, int index)
@@ -63,6 +58,8 @@ t_map	*ft_newline(char *line, int index)
 	newnode->index = index;
 	newnode->line = line;
 	newnode->next = NULL;
+	newnode->player = NULL;
+	newnode->tiles = NULL;
 	return (newnode);
 }
 
