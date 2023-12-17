@@ -1,4 +1,5 @@
 Features :
+
   2D game with customizable characters and settings.
   Smooth graphic management using MiniLibX.
   Map construction with walls, collectibles, and free space.
